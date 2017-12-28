@@ -1,0 +1,2 @@
+caption always "%{= kw}%-w%{= gW}%n %t%{-}%+w %-= bigdatums.net - %Y-%m-%d %C:%s"
+

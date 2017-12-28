@@ -7,10 +7,12 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rbgrouleff/bclose.vim'
+Plugin 'dietsche/vim-lastplace'
 
 call vundle#end()
 filetype plugin indent on
@@ -39,7 +41,15 @@ set mouse=a
 set number
 
 " Trim trailing whitespace
+
 " Indenting
+set tabstop=2     " tabs are at proper location
+set expandtab     " don't use actual tab character (ctrl-v)
+set shiftwidth=2  " indenting is 4 spaces
+set autoindent    " turns it on
+set smartindent   " does the right thing (mostly) in programs
+set cindent       " stricter rules for C program
+
 " Buffer close
 " 
 " S+K
