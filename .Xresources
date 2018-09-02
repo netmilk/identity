@@ -1,0 +1,16 @@
+! Resource on Fonts: http://futurile.net/2016/06/14/xterm-setup-and-truetype-font-configuration/
+! https://github.com/powerline/fonts
+! use fc-cache -vf
+
+XTerm*VT100.Translations: #override \
+ Shift Ctrl <KeyPress> v: insert-selection(PRIMARY) \n\
+ Shift Ctrl <KeyPress> c: copy-selection(PRIMARY)\n
+
+
+xterm*faceName: Droid Sans Mono for Powerline
+xterm*faceSize: 11
+xterm*renderFont: true
+
+! Set the $TERM env variable
+xterm*termName: xterm-256color
+
