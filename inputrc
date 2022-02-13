@@ -3,3 +3,7 @@
 ### arrow down
 "\e[B":history-search-forward
 
+## Ctrl + arrow left
+"\e[1;5D": backward-word
+## Ctrl + arrow right
+"\e[1;5C": forward-word
