@@ -3,6 +3,9 @@
 " $ vim +PluginInstall +qall
 
 "set encoding=utset nocompatible              " be iMproved, required
+set nocompatible
+set backspace=indent,eol,start
+
 set background=dark
 "set t_Co=256
 "set confirm  " Must ask before leaving unsaved buffer
@@ -23,10 +26,35 @@ Plugin 'edkolev/tmuxline.vim'
 Plugin 'rbgrouleff/bclose.vim'
 Plugin 'dietsche/vim-lastplace'
 Plugin 'posva/vim-vue'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'Yggdroot/indentLine'
+"Plugin 'vim-syntastic/syntastic'
+"Plugin 'preservim/nerdtree'
+"Plugin 'jistr/vim-nerdtree-tabs'
 
 call vundle#end()
+
 filetype plugin indent on
 
+" Theme
+colorscheme solarized
+
+" Indentline
+let g:indentLine_char = '│'
+
+" Shift arrow selection
+nmap <S-Up> v<Up>
+nmap <S-Down> v<Down>
+nmap <S-Left> v<Left>
+nmap <S-Right> v<Right>
+vmap <S-Up> <Up>
+vmap <S-Down> <Down>
+vmap <S-Left> <Left>
+vmap <S-Right> <Right>
+imap <S-Up> <C-o>v<Up>
+imap <S-Down> <C-o>v<Down>
+imap <S-Left> <C-o>v<Left>
+imap <S-Right> <C-o>v<Right>
 
 
 " Enable Airline
@@ -35,7 +63,7 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_theme='dark'
+let g:airline_theme='solarized'
 
 set ttimeoutlen=50
 
@@ -45,10 +73,7 @@ set noshowmode
 " Enable syntax highliting
 syntax on
 
-" Start in insert mode
-startinsert
-
-" === NERDTree === 
+" === NERDTree ===
 
 " Try to switch to already opend files
 let g:ctrlp_switch_buffer = 'Et'
@@ -56,21 +81,20 @@ let g:ctrlp_switch_buffer = 'Et'
 " ignore gitignore
 let g:ctrlp_user_command =  ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
+"let g:nerdtree_tabs_open_on_console_startup = 1
+
+"imap <C-CR> <Esc> :NERDTreeTabsToggle <enter>
+"nmap <C-CR> :NERDTreeTabsToggle <enter>
+"vmap <C-CR> <Esc> :NERDTreeTabsToggle <enter>
+
 
 " Toggle with CTRL+Space
 " In insert mode, I found this here: https://stackoverflow.com/questions/7722177/how-do-i-map-ctrl-x-ctrl-o-to-ctrl-space-in-terminal-vim
-inoremap <C-Space> <C-x><C-o>
-inoremap <C-@> <C-o>:CtrlP<CR>
+"inoremap <C-Space> <C-x><C-o>
+"inoremap <C-@> <C-o>:CtrlP<CR>
 " In normal node I found this here:
 " https://stackoverflow.com/questions/23189568/control-space-vim-key-binding-in-normal-mode-does-not-work
-nnoremap <NUL> :CtrlP<CR>
-
-" Switch buffer with S-Arrow 
-inoremap <silent> <S-Left> <C-o>:bp<CR>
-inoremap <silent> <S-Right> <C-o>:bn<CR>
-nnoremap <S-Left> :bp<CR>
-nnoremap <S-Right> :bn<CR>
-
+"nnoremap <NUL> :CtrlP<CR>
 
 
 " Open automatically in no files opened
@@ -91,8 +115,11 @@ set mouse=a
 set number
 
 " Do not auto comment on <Enter>
-autocmd BufNewFile,BufRead * setlocal formatoptions-=r
-  
+"autocmd BufNewFile,BufRead * setlocal formatoptions-=r
+
+autocmd BufRead,BufNewFile * start
+au BufRead,BufNewFile * startinsert
+
 " Trim trailing whitespace
 
 " Indenting
@@ -112,14 +139,28 @@ imap <S-Tab> <C-o><<
 vmap <Tab> >gv
 vmap <S-Tab> <gv
 
-" Yank to the system keyboard
+" Yank to the system clipboard
 set clipboard=unnamed
 
-" Buffer close
-" 
-" S+K
-" C+S
-" C+W
-" S+Arrows to switch buffers
-" TAB to indent
-" C+Arrow work skip
+
+
+" Set the title of the Terminal to the currently open file
+function! SetTerminalTitle()
+    let titleString = expand('%:t')
+    if len(titleString) > 0
+        let &titlestring = expand('%:t')
+        " this is the format iTerm2 expects when setting the window title
+        let args = "\033];".&titlestring."\007"
+        let cmd = 'silent !echo -e "'.args.'"'
+        execute cmd
+        redraw!
+    endif
+endfunction
+
+autocmd BufEnter * call SetTerminalTitle()
+
+
+" Start in insert mode
+startinsert
+
+"autocmd VimEnter * NERDTreeTabsOpen
