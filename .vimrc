@@ -73,7 +73,7 @@ set noshowmode
 " Enable syntax highliting
 syntax on
 
-" === NERDTree ===
+" === NERDTree === 
 
 " Try to switch to already opend files
 let g:ctrlp_switch_buffer = 'Et'
@@ -119,7 +119,7 @@ set number
 
 autocmd BufRead,BufNewFile * start
 au BufRead,BufNewFile * startinsert
-
+  
 " Trim trailing whitespace
 
 " Indenting
@@ -129,6 +129,10 @@ set shiftwidth=2  " indenting is 2 spaces
 set autoindent    " turns it on
 set smartindent   " does the right thing (mostly) in programs
 set cindent       " stricter rules for C program
+
+
+" Indentline is hiding JSON quotes and stuff fix:
+let g:indentLine_setConceal = 0
 
 " (De)Indenting with <(S-)TAB>
 " for command mode reverse tab
@@ -164,3 +168,5 @@ autocmd BufEnter * call SetTerminalTitle()
 startinsert
 
 "autocmd VimEnter * NERDTreeTabsOpen
+
+
